@@ -1,10 +1,10 @@
-# fonctions.py
-
-def puissance(a, b):
-   
-    if not (isinstance(a, int) and isinstance(b, int)):
-        raise TypeError("Les deux arguments doivent être des entiers")
-
-    resultat = a ** b
-    return int(resultat)
-
+def puissance (a,b):
+    if not type(a) is int:
+        raise TypeError("Only integers are allowed")
+    if not type(b) is int:
+        raise TypeError("Only integers are allowed")
+       
+    if a == 0 and b<0:
+        raise ArithmeticError("b negatif")
+       
+    return a** b
