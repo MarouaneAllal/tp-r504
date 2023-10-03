@@ -1,0 +1,99 @@
+TP 2: utilisation avancée de Git
+
+
+Q1.1 - Combien y a-t-il de contributeurs ? (d’après Github) : 9
+
+Q1.2 - Clonez le projet dans votre "home", en mesurant le temps :
+
+Clonage dans 'explain-git-with-d3'...
+remote: Enumerating objects: 397, done.
+remote: Total 397 (delta 0), reused 0 (delta 0), pack-reused 397
+Réception d'objets: 100% (397/397), 92.00 Kio | 1.88 Mio/s, fait.
+Résolution des deltas: 100% (227/227), fait.
+
+real	0m0,695s
+user	0m0,086s
+sys	0m0,060s
+
+Q1.3 - Lancer la commande git blame sur le fichier index.html
+
+La commande git blame est un utilitaire de dépannage polyvalent, qui dispose de nombreuses options d'utilisation. git blame a pour fonction générale d'afficher les métadonnées d'auteur associées à des lignes de commit spécifiques dans un fichier.
+
+Qui a commité la ligne 329 :
+
+git blame index.html | grep 329 
+
+3e5d1596 (Jake Ginnivan      2014-06-17 21:47:47 +0100 329)             name: 'Tag',
+
+Q1.5 - Notez le hash de ce commit :
+
+3e5d1596
+
+Q1.6 - Avec la commande git show sur ce commit, notez le message de l’auteur du commit :
+
+Adding tag command reference
+
+Q1.7 - Date de ce commit : Tue Jun 17 21:47:47 2014 +0100
+
+Q1.8 - En vous aidant de la commande git log <tag>, donner le hash du commit correspondant au tag de la version 1.0.0
+
+
+HASH : dcd7e6a01c914a86e6fb79d1bc96b7b76613c6cb
+
+Q1.9 - Avec git show, qui est l’auteur de ce commit ? Author: Wei Wang 
+
+Date : Tue Jan 6 17:14:04 2015 -0500
+
+Q1.10 - Donner la commande bash qui va vous donner le nombre total de commits (et utilisant l’option --oneline de "git log") : 
+
+git log --oneline | wc -l
+
+et le résultat : 91
+
+Q1.11 - La commande "git log" dispose de l’option "format" qui permet de personnaliser l’affichage du
+resultat. Un certain nombre de formats types sont prédéfinis, par exemple essayer :
+ 
+
+L'option "--format" de la commande "git log" permet de personnaliser l'affichage des commits en utilisant un format spécifié par l'utilisateur. Alors que "--oneline" est un format prédéfini qui affiche chaque commit sur une seule ligne avec son hachage et son message.
+
+
+
+
+
+
+
+
+
+
+
+
+
+ Q1.12 - On peut dans ces formats utiliser des "codes de formats" permettant d’avoir exactement l’infor-mation désirée, via la syntaxe $ git log --format="XXXX"
+en placant entre les guillemets des "placeholders".
+Chercher sur la page précédente la chaine à mettre pour avoir uniquement le nom de l’auteur du commit :
+
+git log –format="%an"
+
+Q1.13 - Via cette dernière commande, et les outils sort, uniq et wc, donner la commande de type "one-liner" qui va afficher le nombre de contributeurs dans ce dépot. Cela correspond-il à ce qui est affiché par Github ?
+git log --format="%an" | sort | uniq | wc -l
+
+affichage : 10 ( on  a deux utilisateur c’est la même personne)
+
+2 Création de branches
+
+1) git status
+
+2) Nom de la branche : Main
+
+3) git branch tp2
+
+git chekcout tp2
+
+4) jouter ce fichier au dépot, et committer. Puis revenir à la branche principale.
+Pouvez-vous voir votre fichier index.html ? Non
+
+5) fait
+
+git clone https://github.com/taibouD/tp-r504.git r504_taibou
+
+
