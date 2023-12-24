@@ -1,0 +1,5 @@
+bash docker_build.sh
+bash docker_run.sh
+bash convert_dbml_to_sql.sh
+bash modify_sql_file.sh
+

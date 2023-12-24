@@ -1,0 +1,35 @@
+Table Machines {
+  ID_Machine int [pk]
+  Marque varchar(255)
+  Date_Achat date
+  RAM int
+}
+
+Table Logiciels {
+  ID_Logiciel int [pk]
+  Nom_Logiciel varchar(255)
+  Version varchar(50)
+  Licence varchar(50)
+}
+
+Table Utilisateurs {
+  ID_Utilisateur int [pk]
+  Nom varchar(255)
+  Prenom varchar(255)
+}
+
+Table Affectations {
+  ID_Affectation int [pk]
+  ID_Machine int [ref: > Machines.ID_Machine]
+  ID_Utilisateur int [ref: > Utilisateurs.ID_Utilisateur]
+  Date_Affectation date
+}
+
+Table Maintenance {
+  ID_Maintenance int [pk]
+  ID_Machine int [ref: > Machines.ID_Machine]
+  Technicien varchar(255)
+  Date_Maintenance date
+  Action_Maintenance varchar(255)
+}
+

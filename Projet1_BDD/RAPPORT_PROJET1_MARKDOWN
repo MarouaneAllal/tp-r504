@@ -1,0 +1,150 @@
+**Marouane ALLAL – Taibou DIALLOU 														23/11/2023**
+
+# **Rapport de Projet : SAE-51**
+
+## **Introduction **
+
+Le but fondamental de ce projet réside dans la mise en place d'une base de données relationnelle dédiée à la gestion d'un parc informatique, couvrant généralement un nombre compris entre 100 et 1000 machines. Cette base de données sera conçue pour assurer un suivi complet des ordinateurs, des logiciels, des utilisateurs associés, ainsi que des problèmes de maintenance et des mises à jour. En résumé, elle offrira une solution intégrée permettant une gestion efficace et systématique de l'ensemble du parc informatique, facilitant ainsi la surveillance, la maintenance proactive et la prise de décisions éclairées.
+
+## **Technologies Utilisées**
+
+- **Système de Gestion de Base de Données (SGBD) :** MySQL
+- **OS Ubuntu -20.** 04.06-desktop
+- **Containerisation :** Docker
+- **Génération de Données :** Script Python utilisant la bibliothèque Faker/Random pour création de fichier.csv + AI chatgpt pour donner plus des données
+- **Fichier Dockerfile :** qui va lancer l'image mysql/mysql-server : latest
+- **Scripts : Pour convertir le fichier DBML en SQL // Pour lancer la base de donnée // Pour automatiser les requêtes**
+- **Dbdiagram.** io : site web pour schématisation des tables + Générer le fichier DBML
+
+## **Configuration du Projet**
+
+1.
+## Schématisation des tables
+
+![](RackMultipart20231224-1-3noz3m_html_4325a15faa1cf0fa.png)
+
+Nous avons utilisé dbdiagram.io, une plateforme qui nous a grandement facilité la création d'une présentation visuelle de nos tables. Cela inclut la représentation des différentes relations, les clés primaires et étrangères, ainsi que les spécifications des types de caractères pour chaque colonne dans nos tables. Cette visualisation claire et organisée nous a permis de mieux comprendre la structure de notre base de données et de la présenter de manière efficace.
+
+Nous avons utilisé dbdiagram.io, une plateforme qui nous a grandement facilité la création d'une présentation visuelle de nos tables. Cela inclut la représentation des différentes relations, les clés primaires et étrangères, ainsi que les spécifications des types de caractères Nous avons utilisé dbdiagram.io, une plateforme qui nous a grandement facilité la création d'une présentation visuelle de nos tables. Cela inclut la représentation des différentes relations, les clés primaires et étrangères, ainsi que les spécifications des types de caractères pour chaque colonne dans nos tables. Cette visualisation claire et organisée nous a permis de mieux comprendre la structure de notre base de données et de la présenter de manière efficace.
+
+## Ensuite, il est nécessaire de vérifier le code SQL qui sera utilisé pour créer les tables de notre base de données, que nous avons nommée "Informatique". À cet effet, nous avons recours à un site web spécifique qui permet de vérifier la structure correcte du code SQL. En cas d'erreur, le site identifie précisément l'emplacement du problème et fournit des indications sur la manière de le corriger. L'URL du site que nous utilisons à cette fin est [https://www.coderstool.com/sql-syntax-checker.](https://www.coderstool.com/sql-syntax-checker) Cette étape garantit la qualité et la précision de notre code SQL avant la création effective de la base de données.
+
+![](RackMultipart20231224-1-3noz3m_html_83edf5ae89580887.png)
+
+##
+
+## 2. Installation de MySQL via Docker
+
+Dans notre cas on à choisir de faire un PULL d'une image Mysql déjà existé, on a choisi l'image mysql/mysql-server :latest
+
+![](RackMultipart20231224-1-3noz3m_html_2c3db4a1872dea02.png)
+
+Pour démarrer le conteneur à partir de l'image que nous avons téléchargée, le conteneur a été nommé "mysqlsss" et le port a été configuré pour utiliser le port local 3307 et le port du conteneur 3307 :
+
+- ![](RackMultipart20231224-1-3noz3m_html_1d1f84360df173a2.png) **Docker run -p 3307 :3307 -d –name=mysqlsss mysql/ mysql-server :latest**
+
+Cette commande lance un conteneur en arrière-plan ("-d") avec le nom spécifié ("--name=mysqlsss"), en mappant le port local 3307 sur le port du conteneur 3307. L'image utilisée est celle de MySQL Server la plus récente disponible. Ce conteneur sera maintenant opérationnel et accessible via le port local 3307.
+
+- **L'accès sur la base de données MYSQL**
+
+Lors du premier accès à la base de données MySQL, après avoir exécuté la commande docker exec -it mysqlsss bash, il est nécessaire de récupérer le mot de passe par défaut généré. Pour ce faire, on peut utiliser la commande docker logs mysqlsss. Cela permet de copier le mot de passe généré par défaut, facilitant ainsi l'accès initial à la base de données.
+
+Afin de simplifier ultérieurement l'accès en évitant la recherche du mot de passe par défaut, il est recommandé d'exécuter la commande suivante après l'accès initial :
+
+**docker exec -it mysqlsss mysql -uroot -p -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';"**
+
+Cette commande modifie le mot de passe de l'utilisateur 'root' pour le définir comme 'root', facilitant ainsi les futures connexions à la base de données. Après avoir exécuté cette commande,
+
+L'accès à la base de données peut être effectué avec le mot de passe 'root'.
+
+![](RackMultipart20231224-1-3noz3m_html_c00f78df01bdba88.png)
+
+- **Création de fichier : s'appelle ''create\_database.sql'' qui va faire la création des tables**
+
+![](RackMultipart20231224-1-3noz3m_html_8cf65ed840cb5442.png)
+
+- **La conception d'un script Python visant à générer et créer un fichier CSV renfermant les informations essentielles pour notre parc informatique.**
+
+Ce script Python a été conçu dans le but de générer et de créer un fichier CSV, contenant des informations simulées pour un parc informatique. Utilisant la bibliothèque Faker, le script crée des données aléatoires pour des machines et des utilisateurs, telles que la marque de la machine, la date d'achat, la capacité de la RAM, l'identifiant de l'utilisateur, ainsi que le nom et le prénom de l'utilisateur. Le fichier CSV résultant est structuré avec des colonnes appropriées, et le nombre d'entrées peut être ajusté en fonction des besoins. Cette approche permet d'obtenir rapidement un jeu de données fictives,
+
+- On utilise la bibliothèque Faker pour générer des données aléatoires.
+- Le fichier CSV est configuré avec des colonnes telles que l'ID de la machine, la marque, la date d'achat, la RAM, l'ID de l'utilisateur, le nom et le prénom de l'utilisateur.
+- Les données sont générées pour un certain nombre d'entrées spécifié par num\_entries.
+- Un fichier CSV est créé avec le nom spécifié dans csv\_filename parc\_informatique.csv
+
+**Le file.py :**
+
+![](RackMultipart20231224-1-3noz3m_html_5b8acbdf2bee6e55.png)Avant d'exécuter le script Python, il est nécessaire d'installer les bibliothèques nécessaires telles que Faker, Python3, et Random. Assurez-vous d'avoir ces dépendances installées
+
+![](RackMultipart20231224-1-3noz3m_html_892614f5823ca61c.png)Le fichier générer : parc\_informatique.csv :
+
+- **Incorporer le fichier SQL dans la base de données MySQL**
+
+Peut être réalisé soit par l'exécution d'un script, soit en utilisant des commandes en ligne. Dans notre cas, nous avons opté pour la seconde option et avons réussi à insérer notre base de données. Pour vérifier l'insertion réussie, nous procédons à l'affichage de notre base de données ainsi que des tables créées, afin de garantir la précision et l'intégrité de notre base de données.
+
+![](RackMultipart20231224-1-3noz3m_html_bea964d58b42ad42.png)
+
+Après la création réussie de la base de données, le processus suivant consiste à lier cette base de données avec le fichier contenant les informations, soit les données nécessaires pour tester les requêtes. Tout d'abord, le fichier "parc\_informatique.csv" a été copié vers le conteneur Docker à l'aide de la commande suivante :
+
+**Docker cp /chemin/vers/notre/fichier.csv mysqlsss\_mysql:/chemin/vers/fichier.csv**
+
+Cette étape permet de transférer le fichier CSV vers le conteneur Docker afin de pouvoir le charger dans la base de données MySQL qui s'exécute dans ce conteneur.
+
+Ensuite, le lien entre la base de données et le fichier de données a été établi à l'aide des commandes SQL suivantes :
+
+**LOAD DATA LOCAL INFILE '/home/marouane/parc\_informatique.csv' INTO TABLE Machines**
+
+**FIELDS TERMINATED BY ','**
+
+**LINES TERMINATED BY '\n'**
+
+**IGNORE 1 ROWS**
+
+**(machine\_id, marque, date\_achat, configuration);**
+
+**-- Chargez les données dans la table Logiciels**
+
+**LOAD DATA LOCAL INFILE '/home/marouane/parc\_informatique.csv' INTO TABLE Logiciels**
+
+**FIELDS TERMINATED BY ','**
+
+**LINES TERMINATED BY '\n'**
+
+**IGNORE 1 ROWS**
+
+**(logiciel\_id, nom\_logiciel, version\_logiciel, licence\_logiciel);**
+
+… (pour le reste des tables).
+
+Ces commandes LOAD DATA permettent d'importer les données du fichier CSV dans les tables correspondantes de la base de données. Chaque commande spécifie les détails de la structure du fichier CSV et la correspondance des colonnes avec celles des tables. Cela assure un lien réussi entre les données du fichier et la base de données, permettant ainsi de tester les requêtes avec des données réelles.
+
+- **Vérification des requêtes **
+
+L'avant-dernière étape consiste à tester la capacité de collecte des données à partir de notre base de données en utilisant des requêtes. Comme la montre clairement, nous avons réussi à obtenir les résultats escomptés à partir de ces requêtes, démontrant ainsi le bon fonctionnement de notre système de gestion de base de données.
+
+![](RackMultipart20231224-1-3noz3m_html_4027e66de5c2d8d7.png).
+
+Actuellement, nous sommes dans la phase d'automatisation des requêtes pour visualiser les résultats. Nous travaillons sur la création d'un fichier .sh qui regroupe l'ensemble des requêtes, telles que présentées dans la capture d'écran. Nous introduisons des modifications dans le fichier pour permettre à l'utilisateur de prendre une action après chaque requête, déterminant s'il souhaite continuer à afficher les résultats des autres requêtes ou non.
+
+En parallèle, nous réfléchissons à la possibilité d'améliorer l'expérience utilisateur en affichant les résultats des requêtes sur une interface graphique, que ce soit sous la forme d'une page web ou d'une autre méthode offrant une présentation plus visuelle et professionnelle. Cette initiative vise à rendre la visualisation des données plus intuitive et accessible.
+
+- Automatisation : création des scripts pour les requêtes et pour lancement de la base de données et la création du fichier SQL et l'insertion des donnée dans les tables.
+
+Les scripts sont dans le dépôts Git.
+
+- **Gestion du projet **
+
+Au cours de ce projet, une portion significative du temps a été consacrée à la phase de recherche, étant donné que le projet semblait initialement complexe. Nous avons exploré diverses plateformes, notamment YouTube, pour trouver des tutoriels et des documentations détaillant la gestion de bases de données sur un système d'exploitation Debian/Ubuntu. Après cette recherche approfondie, nous avons procédé à l'explication des objectifs du projet, effectué des tests sur nos propres machines ainsi que sur la machine de ma collègue Taibou Diallou, et avons échangé des idées et des efforts pour résoudre les défis rencontrés.
+
+Pour suivre l'avancement du projet pendant les périodes professionnelles à l'entreprise, nous avons décidé d'effectuer des mises à jour régulières, signalant les problèmes rencontrés, les solutions envisagées, et posant des questions pendant le week-end pour assurer une communication continue.
+
+Actuellement, nous avons atteint un stade où le projet est fonctionnel, et nous nous concentrons sur les dernières modifications de la présentation visuelle. Ces ajustements ne devraient pas demander beaucoup de temps pour être réalisés, marquant ainsi la phase finale du projet.
+
+- **Les différentes sources qu'on a utilisées pour nous aider sur le projet **
+
+- [**https://www.youtube.com/watch?v=yqibi2AVsXg&ab\_channel=LinuxHelp**](https://www.youtube.com/watch?v=yqibi2AVsXg&ab_channel=LinuxHelp)
+- [**https://dbdiagram.io/d/654f8ebe7d8bbd6465fb0c5a**](https://dbdiagram.io/d/654f8ebe7d8bbd6465fb0c5a)
+- [**https://www.dsfc.net/bdd/import-de-fichier-csv-dans-mariadb-mysql/**](https://www.dsfc.net/bdd/import-de-fichier-csv-dans-mariadb-mysql/)
+- **TP4\_Universitice**
+- [**https://chat.openai.com/**](https://chat.openai.com/)
+- [**https://www.mysqltutorial.org/import-csv-file-mysql-table/**](https://www.mysqltutorial.org/import-csv-file-mysql-table/)
