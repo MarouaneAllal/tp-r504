@@ -1,0 +1,15 @@
+HTTP/1.1 301 Moved Permanently
+Connection: close
+Content-Length: 0
+Server: Varnish
+Retry-After: 0
+Location: https://www.javaworld.com/
+Accept-Ranges: bytes
+Date: Thu, 25 Jan 2024 14:31:46 GMT
+Via: 1.1 varnish
+X-Served-By: cache-lcy-eglc8600066-LCY
+X-Cache: HIT
+X-Cache-Hits: 0
+X-Timer: S1706193107.738248,VS0,VE0
+X-Via-Fastly: Verdad
+
